@@ -1,0 +1,29 @@
+class klass:
+    def __init__(self, fio, tlnom, year):
+        self.fio = fio
+        self.tlnom = tlnom
+        self.year = year
+        
+    def klnom(self):
+        nom = 0
+        a = 7
+        
+        while a < self.year:
+            nom += 1
+            a += 1
+            
+        if self.year < 7:
+            print("не дорос")
+        elif self.year > 18:
+            print("перерос")
+        else:
+            print(f"человеку {self.year} - я предполагаю что он учится в {nom} классе")
+        
+class kid(klass):
+    def __init__(self, fio, tlnom, year, pol, Osebe):
+        super().__init__(fio, tlnom, year)
+        self.pol = pol
+        self.Osebe = Osebe
+
+misha = kid("misha", "+79387482859", 10, "m", "ученик")
+misha.klnom()
