@@ -1,0 +1,66 @@
+using System;
+namespace abc
+{
+    internal class Prog
+    {
+        static void Main(string[] args)
+        {
+            int a = 4;
+            int b = 10;
+            int c = Cal.Sum(a, b);
+            Cal.Umnoj(a, b);
+            Cal.Umnoj(a, b, c);
+            Convert.ToDouble(c);
+            Cal.Sum(a, c);
+   one x = new();
+   x.info(a);
+        }
+    }
+}
+static class Cal
+{
+    public static int Sum(int a, int b)
+    {
+        int r = a + b;
+        Console.WriteLine($"сумма {a} и {b} = {r}");
+        return r;
+    }
+    public static void Sum(int a, double c)
+    {
+        double r = a + c;
+        Console.WriteLine($"сумма {a} и {c} = {r}");
+    }
+    public static void Umnoj(int a, int b)
+    {
+        int r = Cal.Sum(a, b);
+        int c = r * a;
+        int d = r * b;
+        Console.WriteLine($"если умножить {a} на {r} будет {c} и если умножить {b} на {r} то получится {d}");
+    }
+    public static void Umnoj(int a, int b, int c)
+    {
+        int r = c * a * b;
+        Console.WriteLine($"если умножить {a} на {b} на {c} будет {r}");
+    }
+public static void name(int a)
+ {
+  if (a == 0) Console.Write("ноль");
+  if (a == 1) Console.Write("один");
+  if (a == 2) Console.Write("два");
+  if (a == 3) Console.Write("три");
+  if (a == 4) Console.Write("четыре");
+  if (a == 5) Console.Write("пять");
+  if (a == 6) Console.Write("шесть");
+  if (a == 7) Console.Write("семь");
+  if (a == 8) Console.Write("восемь");
+  if (a == 9) Console.Write("девять");
+ }
+}
+struct one
+{
+ public void info(int a)
+ {
+        Console.WriteLine($"число {a} будет в буквах таким - ");
+     Cal.name(a);
+ }
+}
