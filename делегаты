@@ -1,0 +1,75 @@
+using System.Reflection.Metadata.Ecma335;
+
+namespace abc
+
+{
+    internal class Prog
+
+    {
+        public delegate int delegat1 (int x, int y); //singlecast - ссылается на один метод
+
+        public delegate void delegat2 (int x, int y, int z); //multicast - ссылается на несколько методов
+
+        public delegate void delegat3(); //anonymous - делегат с встроенным методом
+        static void Main(string[] args)
+        {
+            //singlecast - ссылается на один метод
+            Console.WriteLine("singlecast - ссылается на один метод\n");
+
+            delegat1 A = new(SokrYmnoj);
+
+            Console.WriteLine(A(2, 4));
+
+            //multicast - ссылается на несколько методов
+            Console.WriteLine("\nmulticast - ссылается на несколько методов\n");
+
+            delegat2 B = new(ABC);
+
+            B += CBA; //можно прибавить метод
+
+            Console.WriteLine("несколько методов\n");
+
+            B(4, 2, 1);
+
+            B -= ABC; //можно убавить метод
+
+            Console.WriteLine("\nодин метод\n");
+
+            B(4, 2, 1);
+
+            //anonymous - делегат с встроенным методом
+            delegat3 C1 = delegate ()
+            {
+                Console.WriteLine("\nя встроенный!\n");
+            };
+
+            Console.WriteLine("\nanonymous - делегат с встроенным методом\n");
+
+            C1();
+
+            //делегат в методе
+            delegat3 C2 = delegate ()
+            {
+                Console.WriteLine("\nя встроенный но уже в МЕТОД!\n");
+            };
+
+            del(C2);
+        }
+        private static int SokrYmnoj (int x, int y)
+        {
+            return x * x + 2 * x * y + y * y;
+        }
+        private static void ABC(int x, int y, int z)
+        {
+            Console.WriteLine($"вычитание {x - y - z}");
+        }
+        private static void CBA(int x, int y, int z)
+        {
+            Console.WriteLine($"сложение {x + y + z}");
+        }      
+        public static void del(delegat3 A) // делегат можно добавить в метод
+        {
+            A();
+        }
+    }
+}
