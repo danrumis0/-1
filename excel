@@ -1,0 +1,73 @@
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Excel.Application excelApp = null;
+        Excel.Workbook workbook = null;
+        Excel.Worksheet worksheet = null;
+
+        try
+        {
+            // 1. Создаём приложение Excel
+            excelApp = new Excel.Application();
+            excelApp.Visible = false; // Не показываем Excel
+                                      // Для некоммерческого использования (если нужно)
+                                      // excelApp.DisplayAlerts = false;
+
+            // 2. Открываем файл
+            string filePath = @"E:\Книга1.xlsx";
+            workbook = excelApp.Workbooks.Open(filePath);
+
+            // 3. Получаем первый лист (индексация с 1)
+            worksheet = workbook.Worksheets[1];
+
+            // 4. Получаем используемый диапазон
+            Excel.Range usedRange = worksheet.UsedRange;
+            int rowCount = usedRange.Rows.Count;
+            int columnCount = usedRange.Columns.Count;
+
+            Console.WriteLine($"Размер таблицы: {rowCount} строк x {columnCount} колонок\n");
+
+            // 5. Читаем все ячейки
+            for (int row = 1; row <= rowCount; row++)
+            {
+                for (int col = 1; col <= columnCount; col++)
+                {
+                    Excel.Range cell = usedRange.Cells[row, col];
+                    object cellValue = cell.Value2;
+
+                    // Обработка пустых ячеек
+                    string displayValue = (cellValue != null) ? cellValue.ToString() : "";
+                    Console.Write($"{displayValue}\t");
+                }
+                Console.WriteLine();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка: {ex.Message}");
+        }
+        finally
+        {
+            // 6. Освобождаем ресурсы
+            if (worksheet != null) Marshal.ReleaseComObject(worksheet);
+            if (workbook != null)
+            {
+                workbook.Close(false);
+                Marshal.ReleaseComObject(workbook);
+            }
+            if (excelApp != null)
+            {
+                excelApp.Quit();
+                Marshal.ReleaseComObject(excelApp);
+            }
+        }
+
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+}
